@@ -1,6 +1,6 @@
-# shop_practice
+# Shop App
 
-A new Flutter project.
+A shop app to buy products and add products to shop to sell them.
 
 ## Getting Started
 
