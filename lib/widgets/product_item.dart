@@ -5,17 +5,19 @@ import 'package:provider/provider.dart';
 import '../providers/product.dart';
 import '../screens/products_detail_screen.dart';
 
-class ProductItem extends StatelessWidget {
-  // final String id;
-  // final String title;
-  // final String imageUrl;
+class ProductItem extends StatefulWidget {
 
-  // ProductItem(this.id, this.title, this.imageUrl);
+  @override
+  _ProductItemState createState() => _ProductItemState();
+}
+
+class _ProductItemState extends State<ProductItem> {
 
   @override
   Widget build(BuildContext context) {
 
     final product = Provider.of<Product>(context);
+    var _isFavorite = product.isFavourite;
     
     return GestureDetector(
       onTap: () {
@@ -32,8 +34,10 @@ class ProductItem extends StatelessWidget {
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           leading: IconButton(
-            icon: Icon(Icons.favorite),
-            onPressed: () {},
+            icon: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border),
+            onPressed: () {
+              product.toggleFavoriteStatus();
+            },
             color: Theme.of(context).accentColor,
           ),
           title: Text(
