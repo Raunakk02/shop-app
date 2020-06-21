@@ -23,7 +23,8 @@ class Order with ChangeNotifier {
   }
 
   void addOrder(List<CartItem> cartItems, double total) {
-    _items.add(
+    _items.insert(
+      0,
       OrderItem(
         id: DateTime.now().toString(),
         cartItems: cartItems,
@@ -33,5 +34,5 @@ class Order with ChangeNotifier {
     );
     notifyListeners();
   }
-  
+
 }
