@@ -24,6 +24,7 @@ class AppDrawer extends StatelessWidget {
               'Shop',
               style: TextStyle(
                 color: Colors.grey[700],
+                fontSize: 20,
               ),
             ),
           ),
@@ -43,6 +44,7 @@ class AppDrawer extends StatelessWidget {
               'My Orders',
               style: TextStyle(
                 color: Colors.grey[700],
+                fontSize: 20,
               ),
             ),
           ),

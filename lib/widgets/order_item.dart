@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../providers/order.dart' as ord;
 
 class OrderItem extends StatefulWidget {
@@ -26,11 +27,17 @@ class _OrderItemState extends State<OrderItem> {
             ListTile(
               title: Text(
                   'Total Amount: \$ ${widget.order.totalAmount.toStringAsFixed(2)}'),
-              subtitle: Text('Placed On: ${widget.order.dateTime}'),
+              subtitle: Text('Placed On: ${DateFormat('dd/MM/yyyy hh:mm').format(widget.order.dateTime)}'),
               trailing: IconButton(
                 icon: _isExpanded
-                    ? Icon(Icons.expand_less)
-                    : Icon(Icons.expand_more),
+                    ? Icon(
+                        Icons.expand_less,
+                        color: Theme.of(context).accentColor,
+                      )
+                    : Icon(
+                        Icons.expand_more,
+                        color: Theme.of(context).accentColor,
+                      ),
                 onPressed: () {
                   setState(() {
                     _isExpanded = !_isExpanded;
@@ -41,11 +48,11 @@ class _OrderItemState extends State<OrderItem> {
             if (_isExpanded)
               Container(
                 width: double.infinity,
-                height: min(widget.order.cartItems.length * 20.0 + 10, 180),
+                height: min(widget.order.cartItems.length * 22.0 + 10, 180),
                 child: Scrollbar(
                   child: ListView.builder(
                     itemBuilder: (ctx, index) {
-                      return Padding(
+                      return Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 5),
                         child: Row(
