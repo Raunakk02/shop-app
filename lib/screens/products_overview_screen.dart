@@ -57,38 +57,46 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             ],
           ),
           Consumer<Cart>(
-            builder: (ctx,cart,staticChild) => Badge(
+            builder: (ctx, cart, staticChild) => Badge(
               baseIconWidget: staticChild,
               data: cart.noOfItemsInCart.toString(),
             ),
             child: IconButton(
-                icon: Icon(Icons.shopping_cart),
-                onPressed: () {
-                  //...take to cart screen
-                  Navigator.of(context).pushNamed(CartsScreen.routeName);
-                },
-                alignment: Alignment.bottomCenter,
-              ),
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {
+                //...take to cart screen
+                Navigator.of(context).pushNamed(CartsScreen.routeName);
+              },
+              alignment: Alignment.bottomCenter,
+            ),
           ),
         ],
       ),
       drawer: AppDrawer(),
-      body: GridView.builder(
-        itemBuilder: (ctx, index) {
-          return ChangeNotifierProvider.value(
-            value: loadedProducts[index],
-            child: ProductItem(),
-          );
-        },
-        itemCount: loadedProducts.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
-        ),
-        padding: const EdgeInsets.all(10),
-      ),
+      body: loadedProducts.isEmpty
+          ? _showFavorites
+              ? Center(
+                  child: Text('No Favourite Products yet!'),
+                )
+              : Center(
+                  child: Text('No Products Added yet!'),
+                )
+          : GridView.builder(
+              itemBuilder: (ctx, index) {
+                return ChangeNotifierProvider.value(
+                  value: loadedProducts[index],
+                  child: ProductItem(),
+                );
+              },
+              itemCount: loadedProducts.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 3 / 2,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
+              ),
+              padding: const EdgeInsets.all(10),
+            ),
     );
   }
 }
