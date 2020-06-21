@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_practice/providers/cart.dart';
+import 'package:shop_practice/screens/carts_screen.dart';
+import 'package:shop_practice/widgets/app_drawer.dart';
+import 'package:shop_practice/widgets/badge.dart';
 
 import '../providers/produts.dart';
 
@@ -22,19 +26,20 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<Products>(context);
 
-    final loadedProducts = _showFavorites ? productsProvider.favoriteItems : productsProvider.items;
+    final loadedProducts = _showFavorites
+        ? productsProvider.favoriteItems
+        : productsProvider.items;
 
     return Scaffold(
       appBar: AppBar(
         title: Text('MyShop'),
         actions: [
           PopupMenuButton(
-            onSelected: (selectedFilter){
+            onSelected: (selectedFilter) {
               setState(() {
-                if(selectedFilter == FilterOptions.Favorite){
+                if (selectedFilter == FilterOptions.Favorite) {
                   _showFavorites = true;
-                }
-                else{
+                } else {
                   _showFavorites = false;
                 }
               });
@@ -51,8 +56,23 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               ),
             ],
           ),
+          Consumer<Cart>(
+            builder: (ctx,cart,staticChild) => Badge(
+              baseIconWidget: staticChild,
+              data: cart.noOfItemsInCart.toString(),
+            ),
+            child: IconButton(
+                icon: Icon(Icons.shopping_cart),
+                onPressed: () {
+                  //...take to cart screen
+                  Navigator.of(context).pushNamed(CartsScreen.routeName);
+                },
+                alignment: Alignment.bottomCenter,
+              ),
+          ),
         ],
       ),
+      drawer: AppDrawer(),
       body: GridView.builder(
         itemBuilder: (ctx, index) {
           return ChangeNotifierProvider.value(

@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:shop_practice/providers/cart.dart';
 
 import '../providers/product.dart';
 import '../screens/products_detail_screen.dart';
 
 class ProductItem extends StatefulWidget {
-
   @override
   _ProductItemState createState() => _ProductItemState();
 }
 
 class _ProductItemState extends State<ProductItem> {
-
   @override
   Widget build(BuildContext context) {
-
     final product = Provider.of<Product>(context);
     var _isFavorite = product.isFavourite;
-    
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(
@@ -46,7 +43,13 @@ class _ProductItemState extends State<ProductItem> {
           ),
           trailing: IconButton(
             icon: Icon(Icons.add_shopping_cart),
-            onPressed: () {},
+            onPressed: () {
+              Provider.of<Cart>(context, listen: false).addToCart(
+                product.id,
+                product.title,
+                product.price,
+              );
+            },
             color: Theme.of(context).accentColor,
           ),
         ),
