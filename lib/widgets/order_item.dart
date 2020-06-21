@@ -41,21 +41,25 @@ class _OrderItemState extends State<OrderItem> {
             if (_isExpanded)
               Container(
                 width: double.infinity,
-                height: min(widget.order.cartItems.length * 20.0 + 10, 100),
-                child: ListView.builder(
-                  itemBuilder: (ctx,index){
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 5),
-                      child: Row(
-                        children: [
-                          Text(widget.order.cartItems[index].title),
-                          Spacer(),
-                          Text('${widget.order.cartItems[index].quantity} X \$${widget.order.cartItems[index].price}')
-                        ],
-                      ),
-                    );
-                  },
-                  itemCount: widget.order.cartItems.length,
+                height: min(widget.order.cartItems.length * 20.0 + 10, 180),
+                child: Scrollbar(
+                  child: ListView.builder(
+                    itemBuilder: (ctx, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 5),
+                        child: Row(
+                          children: [
+                            Text(widget.order.cartItems[index].title),
+                            Spacer(),
+                            Text(
+                                '${widget.order.cartItems[index].quantity} X \$${widget.order.cartItems[index].price}')
+                          ],
+                        ),
+                      );
+                    },
+                    itemCount: widget.order.cartItems.length,
+                  ),
                 ),
               ),
           ],
