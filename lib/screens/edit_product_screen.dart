@@ -80,9 +80,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
     _form.currentState.save();
     if (_editedProduct.id == null) {
       Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
-    }
-    else{
-      Provider.of<Products>(context, listen: false).updateProduct(_editedProduct);
+    } else {
+      Provider.of<Products>(context, listen: false)
+          .updateProduct(_editedProduct);
     }
     Navigator.of(context).pop();
   }
@@ -131,7 +131,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   },
                 ),
                 TextFormField(
-                  initialValue: _editedProduct.price.toString(),
+                  initialValue: _editedProduct.price <= 0
+                      ? ''
+                      : _editedProduct.price.toString(),
                   decoration: InputDecoration(labelText: 'Price'),
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.number,
