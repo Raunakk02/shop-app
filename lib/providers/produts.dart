@@ -38,21 +38,29 @@ class Products with ChangeNotifier {
     ),
   ];
 
-  List<Product> get items{
+  List<Product> get items {
     return [..._items];
   }
 
-  List<Product> get favoriteItems{
+  List<Product> get favoriteItems {
     return _items.where((prod) => prod.isFavourite).toList();
   }
 
-  void addProduct(){
+  void addProduct(Product product) {
     //...
+    final newProduct = Product(
+      id: DateTime.now().toString(),
+      title: product.title,
+      description: product.description,
+      imageUrl: product.imageUrl,
+      price: product.price,
+      isFavourite: product.isFavourite,
+    );
+    _items.add(newProduct);
     notifyListeners();
   }
 
-  Product findById(String id){
+  Product findById(String id) {
     return _items.firstWhere((product) => product.id == id);
   }
-
 }
