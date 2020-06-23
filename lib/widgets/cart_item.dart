@@ -20,12 +20,19 @@ class CartItem extends StatelessWidget {
     return Dismissible(
       background: Container(
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         color: Theme.of(context).errorColor,
+        alignment: Alignment.centerRight,
+        child: Icon(
+          Icons.delete,
+          size: 40,
+          color: Colors.white,
+        ),
       ),
       key: ValueKey(productId),
       direction: DismissDirection.endToStart,
-      onDismissed: (_){
-        Provider.of<Cart>(context,listen: false).removeFromCart(productId);
+      onDismissed: (_) {
+        Provider.of<Cart>(context, listen: false).removeFromCart(productId);
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
