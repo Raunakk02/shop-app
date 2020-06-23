@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_practice/screens/orders_screen.dart';
+import 'package:shop_practice/screens/user_products_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -30,7 +31,8 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(
             thickness: 2,
-            indent: 60,
+            indent: 20,
+            endIndent: 20,
           ),
           ListTile(
             onTap: (){
@@ -50,7 +52,30 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(
             thickness: 2,
-            indent: 60,
+            indent: 20,
+            endIndent: 20,
+          ),
+          
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pushReplacementNamed(UserProductsScreen.routeName);
+            },
+            leading: Icon(
+              Icons.edit_attributes,
+              size: 40,
+            ),
+            title: Text(
+              'My Poducts',
+              style: TextStyle(
+                color: Colors.grey[700],
+                fontSize: 20,
+              ),
+            ),
+          ),
+          Divider(
+            thickness: 2,
+            indent: 20,
+            endIndent: 20,
           ),
         ],
       ),
