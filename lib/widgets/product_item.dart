@@ -16,6 +16,8 @@ class _ProductItemState extends State<ProductItem> {
     final product = Provider.of<Product>(context);
     var _isFavorite = product.isFavorite;
 
+    final scaffold = Scaffold.of(context);
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(
@@ -33,7 +35,14 @@ class _ProductItemState extends State<ProductItem> {
           leading: IconButton(
             icon: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border),
             onPressed: () {
-              product.toggleFavoriteStatus();
+              product.toggleFavoriteStatus().catchError((error) {
+                scaffold.removeCurrentSnackBar();
+                scaffold.showSnackBar(
+                  SnackBar(
+                    content: Text(error.toString()),
+                  ),
+                );
+              });
             },
             color: Theme.of(context).accentColor,
           ),
@@ -56,7 +65,8 @@ class _ProductItemState extends State<ProductItem> {
                   action: SnackBarAction(
                     label: 'UNDO',
                     onPressed: () {
-                      Provider.of<Cart>(context,listen: false).removeSingleItem(product.id);
+                      Provider.of<Cart>(context, listen: false)
+                          .removeSingleItem(product.id);
                     },
                   ),
                 ),
