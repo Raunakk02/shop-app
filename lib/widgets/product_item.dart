@@ -14,7 +14,7 @@ class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
-    var _isFavorite = product.isFavourite;
+    var _isFavorite = product.isFavorite;
 
     return GestureDetector(
       onTap: () {

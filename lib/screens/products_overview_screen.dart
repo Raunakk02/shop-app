@@ -21,6 +21,19 @@ class ProductsOverviewScreen extends StatefulWidget {
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showFavorites = false;
+  var _isInit = true;
+
+  @override
+  void didChangeDependencies() {
+    if(_isInit){
+      Provider.of<Products>(context).fetchAndSetData().then((_) {
+        setState(() {
+          _isInit = false;
+        });
+      });
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +86,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: loadedProducts.isEmpty
+      body: _isInit ? Center(child: CircularProgressIndicator(),) : loadedProducts.isEmpty
           ? _showFavorites
               ? Center(
                   child: Text('No Favourite Products yet!'),

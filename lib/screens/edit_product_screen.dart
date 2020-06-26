@@ -49,7 +49,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           description: product.description,
           imageUrl: product.imageUrl,
           price: product.price,
-          isFavourite: product.isFavourite,
+          isFavorite: product.isFavorite,
         );
         _imageUrlController.text = product.imageUrl;
       }
@@ -161,7 +161,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             description: _editedProduct.description,
                             imageUrl: _editedProduct.imageUrl,
                             price: _editedProduct.price,
-                            isFavourite: _editedProduct.isFavourite,
+                            isFavorite: _editedProduct.isFavorite,
                           );
                         },
                       ),
@@ -196,7 +196,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             description: _editedProduct.description,
                             imageUrl: _editedProduct.imageUrl,
                             price: double.parse(value),
-                            isFavourite: _editedProduct.isFavourite,
+                            isFavorite: _editedProduct.isFavorite,
                           );
                         },
                       ),
@@ -222,7 +222,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             description: value,
                             imageUrl: _editedProduct.imageUrl,
                             price: _editedProduct.price,
-                            isFavourite: _editedProduct.isFavourite,
+                            isFavorite: _editedProduct.isFavorite,
                           );
                         },
                       ),
@@ -276,7 +276,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                   description: _editedProduct.description,
                                   imageUrl: value,
                                   price: _editedProduct.price,
-                                  isFavourite: _editedProduct.isFavourite,
+                                  isFavorite: _editedProduct.isFavorite,
                                 );
                               },
                               onFieldSubmitted: (_) => _saveForm(),
