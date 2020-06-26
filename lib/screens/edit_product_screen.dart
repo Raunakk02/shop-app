@@ -85,7 +85,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
     _form.currentState.save();
     if (_editedProduct.id == null) {
       try {
-        await Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+        await Provider.of<Products>(context, listen: false)
+            .addProduct(_editedProduct);
       } catch (error) {
         await showDialog(
           context: context,
@@ -104,18 +105,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
             );
           },
         );
-      }finally{
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.of(context).pop();
       }
     } else {
-      Provider.of<Products>(context, listen: false)
+      await Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct);
-      Navigator.of(context).pop();
     }
-    // Navigator.of(context).pop();
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   @override

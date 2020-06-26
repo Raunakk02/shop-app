@@ -19,26 +19,29 @@ class UserProductsScreen extends StatelessWidget {
             icon: Icon(Icons.add),
             onPressed: () {
               Navigator.of(context).pushNamed(EditProductScreen.routeName);
-               //add product therefore no product id passed as argument
+              //add product therefore no product id passed as argument
             },
           ),
         ],
       ),
       drawer: AppDrawer(),
-      body: ListView.builder(
-        itemBuilder: (ctx, index) {
-          return Column(
-            children: [
-              UserProductItem(
-                productsData.items[index].id,
-                productsData.items[index].title,
-                productsData.items[index].imageUrl,
-              ),
-              Divider(),
-            ],
-          );
-        },
-        itemCount: productsData.items.length,
+      body: RefreshIndicator(
+        onRefresh: () => productsData.fetchAndSetData(),
+        child: ListView.builder(
+          itemBuilder: (ctx, index) {
+            return Column(
+              children: [
+                UserProductItem(
+                  productsData.items[index].id,
+                  productsData.items[index].title,
+                  productsData.items[index].imageUrl,
+                ),
+                Divider(),
+              ],
+            );
+          },
+          itemCount: productsData.items.length,
+        ),
       ),
     );
   }
