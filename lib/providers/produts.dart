@@ -42,6 +42,14 @@ class Products with ChangeNotifier {
     // ),
   ];
 
+  String authToken;
+
+  void updateProductsProperty(String token, List<Product> prevProductsList) {
+    authToken = token;
+    _items = prevProductsList;
+    notifyListeners();
+  }
+
   List<Product> get items {
     return [..._items];
   }
@@ -51,7 +59,8 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetData() async {
-    const url = 'https://flutter-update-practice.firebaseio.com/products.json';
+    final url =
+        'https://flutter-update-practice.firebaseio.com/products.json?auth=$authToken';
 
     final response = await http.get(url);
 
@@ -81,7 +90,8 @@ class Products with ChangeNotifier {
   }
 
   Future<Null> addProduct(Product product) async {
-    const url = 'https://flutter-update-practice.firebaseio.com/products.json';
+    final url =
+        'https://flutter-update-practice.firebaseio.com/products.json?auth=$authToken';
 
     try {
       final response = await http.post(url,
@@ -111,7 +121,7 @@ class Products with ChangeNotifier {
     final index = _items.indexWhere((prod) => prod.id == newProduct.id);
     if (index >= 0) {
       final url =
-          'https://flutter-update-practice.firebaseio.com/products/${newProduct.id}.json';
+          'https://flutter-update-practice.firebaseio.com/products/${newProduct.id}.json?auth=$authToken';
 
       final oldProduct = _items[index];
 
@@ -147,7 +157,7 @@ class Products with ChangeNotifier {
     notifyListeners();
 
     final url =
-        'https://flutter-update-practice.firebaseio.com/products/$id.json';
+        'https://flutter-update-practice.firebaseio.com/products/$id.json?auth=$authToken';
 
     try {
       final response = await http.delete(url);
