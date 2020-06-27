@@ -39,12 +39,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.builder(
-              itemBuilder: (ctx, index) {
-                return OrderItem(orders[index]);
-              },
-              itemCount: orders.length,
-            ),
+          : orders.isEmpty
+              ? Center(
+                  child: Text('No orders yet!'),
+                )
+              : ListView.builder(
+                  itemBuilder: (ctx, index) {
+                    return OrderItem(orders[index]);
+                  },
+                  itemCount: orders.length,
+                ),
     );
   }
 }

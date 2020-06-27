@@ -45,7 +45,7 @@ class Products with ChangeNotifier {
   String authToken;
   String userId;
 
-  void updateProductsProperty(String token,String authUserId, List<Product> prevProductsList,) {
+  void updateProductsProperties(String token,String authUserId, List<Product> prevProductsList,) {
     authToken = token;
     _items = prevProductsList;
     userId = authUserId;
