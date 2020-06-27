@@ -60,9 +60,12 @@ class Products with ChangeNotifier {
     return _items.where((prod) => prod.isFavorite).toList();
   }
 
-  Future<void> fetchAndSetData() async {
+  Future<void> fetchAndSetData([bool productFilterOption = false]) async {
+
+    var filterString = productFilterOption ? '&orderBy="creatorId"&equalTo="$userId"' : '';
+
     var url =
-        'https://flutter-update-practice.firebaseio.com/products.json?auth=$authToken';
+        'https://flutter-update-practice.firebaseio.com/products.json?auth=$authToken$filterString';
 
     final response = await http.get(url);
 
@@ -108,7 +111,7 @@ class Products with ChangeNotifier {
             'description': product.description,
             'price': product.price,
             'imageUrl': product.imageUrl,
-            'isFavorite': product.isFavorite,
+            'creatorId':userId,
           }));
       final newProduct = Product(
         id: json.decode(response.body)['name'],
@@ -141,7 +144,6 @@ class Products with ChangeNotifier {
             'description': newProduct.description,
             'price': newProduct.price,
             'imageUrl': newProduct.imageUrl,
-            'isFavorite': newProduct.isFavorite,
           }),
         );
 
