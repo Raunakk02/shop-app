@@ -35,7 +35,7 @@ class Auth with ChangeNotifier {
       [bool _isLogin = false]) async {
     final urlSegment = _isLogin ? 'signInWithPassword' : 'signUp';
     final url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=AIzaSyDflkZ3m3rkTrb8Bt0Mdq_3G5I4NICa5A0';
+        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=[API-KEY]';
 
     try {
       final response = await http.post(
