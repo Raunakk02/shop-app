@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
           update: (_, auth, previousProducts) => Products()
             ..updateProductsProperty(
               auth.token,
+              auth.userId,
               previousProducts.items,
             ),
         ),

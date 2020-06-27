@@ -43,10 +43,12 @@ class Products with ChangeNotifier {
   ];
 
   String authToken;
+  String userId;
 
-  void updateProductsProperty(String token, List<Product> prevProductsList) {
+  void updateProductsProperty(String token,String authUserId, List<Product> prevProductsList,) {
     authToken = token;
     _items = prevProductsList;
+    userId = authUserId;
     notifyListeners();
   }
 
@@ -59,7 +61,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetData() async {
-    final url =
+    var url =
         'https://flutter-update-practice.firebaseio.com/products.json?auth=$authToken';
 
     final response = await http.get(url);
@@ -69,6 +71,12 @@ class Products with ChangeNotifier {
     if (extractedData == null) {
       return;
     }
+
+    url = 'https://flutter-update-practice.firebaseio.com/userFavorites/$userId.json?auth=$authToken';
+
+    final favResponse = await http.get(url);
+    final favData = json.decode(favResponse.body);
+
 
     final List<Product> loadedProducts = [];
 
@@ -80,7 +88,7 @@ class Products with ChangeNotifier {
           description: prodData['description'],
           imageUrl: prodData['imageUrl'],
           price: prodData['price'],
-          isFavorite: prodData['isFavorite'],
+          isFavorite:favData == null ? false :  favData[prodId] == null ? false : favData[prodId],
         ),
       );
     });

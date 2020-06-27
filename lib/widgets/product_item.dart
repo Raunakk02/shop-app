@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_practice/providers/auth.dart';
 import 'package:shop_practice/providers/cart.dart';
 
 import '../providers/product.dart';
@@ -14,6 +15,7 @@ class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
+    final auth = Provider.of<Auth>(context, listen: false);
     var _isFavorite = product.isFavorite;
 
     final scaffold = Scaffold.of(context);
@@ -35,7 +37,10 @@ class _ProductItemState extends State<ProductItem> {
           leading: IconButton(
             icon: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border),
             onPressed: () {
-              product.toggleFavoriteStatus().catchError((error) {
+              product
+                  .toggleFavoriteStatus(
+                      auth.token,auth.userId)
+                  .catchError((error) {
                 scaffold.removeCurrentSnackBar();
                 scaffold.showSnackBar(
                   SnackBar(

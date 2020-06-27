@@ -23,6 +23,10 @@ class Auth with ChangeNotifier {
     return token != null;
   }
 
+  String get userId {
+    return _userId;
+  }
+
   Future<void> _authenticate(String email, String password,
       [bool _isLogin = false]) async {
     final urlSegment = _isLogin ? 'signInWithPassword' : 'signUp';
