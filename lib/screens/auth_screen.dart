@@ -105,6 +105,7 @@ class _AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
 
   AnimationController _controller;
   Animation<double> _opacityAnimation;
+  Animation<Offset> _positionAnimation;
 
   @override
   void initState() {
@@ -122,10 +123,19 @@ class _AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
     ).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Curves.linear,
+        curve: Curves.easeIn,
       ),
     );
 
+    _positionAnimation = Tween<Offset>(
+      begin: Offset(0, -1.0),
+      end: Offset(0, 0),
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeIn,
+      ),
+    );
   }
 
   void _showErrorDialog(String message) {
@@ -256,21 +266,24 @@ class _AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
                   },
                 ),
                 if (_authMode == AuthMode.Signup)
-                  FadeTransition(
-                    opacity: _opacityAnimation,
-                    child: TextFormField(
-                      enabled: _authMode == AuthMode.Signup,
-                      decoration:
-                          InputDecoration(labelText: 'Confirm Password'),
-                      obscureText: true,
-                      validator: _authMode == AuthMode.Signup
-                          ? (value) {
-                              if (value != _passwordController.text) {
-                                return 'Passwords do not match!';
+                  SlideTransition(
+                    position: _positionAnimation,
+                    child: FadeTransition(
+                      opacity: _opacityAnimation,
+                      child: TextFormField(
+                        enabled: _authMode == AuthMode.Signup,
+                        decoration:
+                            InputDecoration(labelText: 'Confirm Password'),
+                        obscureText: true,
+                        validator: _authMode == AuthMode.Signup
+                            ? (value) {
+                                if (value != _passwordController.text) {
+                                  return 'Passwords do not match!';
+                                }
+                                return null;
                               }
-                              return null;
-                            }
-                          : null,
+                            : null,
+                      ),
                     ),
                   ),
                 SizedBox(
