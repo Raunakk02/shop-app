@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_practice/helpers/custom_page_route.dart';
 
 import '../providers/auth.dart';
 
@@ -40,8 +41,11 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(OrdersScreen.routeName);
+              Navigator.of(context).pushReplacement(
+                CustomPageRoute(
+                  builder: (ctx) => OrdersScreen(),
+                ),
+              );
             },
             leading: Icon(
               Icons.payment,
