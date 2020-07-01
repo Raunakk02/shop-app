@@ -27,7 +27,8 @@ class _OrderItemState extends State<OrderItem> {
             ListTile(
               title: Text(
                   'Total Amount: \$ ${widget.order.totalAmount.toStringAsFixed(2)}'),
-              subtitle: Text('Placed On: ${DateFormat('dd/MM/yyyy hh:mm').format(widget.order.dateTime)}'),
+              subtitle: Text(
+                  'Placed On: ${DateFormat('dd/MM/yyyy hh:mm').format(widget.order.dateTime)}'),
               trailing: IconButton(
                 icon: _isExpanded
                     ? Icon(
@@ -45,30 +46,33 @@ class _OrderItemState extends State<OrderItem> {
                 },
               ),
             ),
-            if (_isExpanded)
-              Container(
-                width: double.infinity,
-                height: min(widget.order.cartItems.length * 22.0 + 10, 180),
-                child: Scrollbar(
-                  child: ListView.builder(
-                    itemBuilder: (ctx, index) {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 5),
-                        child: Row(
-                          children: [
-                            Text(widget.order.cartItems[index].title),
-                            Spacer(),
-                            Text(
-                                '${widget.order.cartItems[index].quantity} X \$${widget.order.cartItems[index].price}')
-                          ],
-                        ),
-                      );
-                    },
-                    itemCount: widget.order.cartItems.length,
-                  ),
+            AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              curve: Curves.linear,
+              width: double.infinity,
+              height: _isExpanded
+                  ? min(widget.order.cartItems.length * 22.0 + 10, 180)
+                  : 0,
+              child: Scrollbar(
+                child: ListView.builder(
+                  itemBuilder: (ctx, index) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 5),
+                      child: Row(
+                        children: [
+                          Text(widget.order.cartItems[index].title),
+                          Spacer(),
+                          Text(
+                              '${widget.order.cartItems[index].quantity} X \$${widget.order.cartItems[index].price}')
+                        ],
+                      ),
+                    );
+                  },
+                  itemCount: widget.order.cartItems.length,
                 ),
               ),
+            ),
           ],
         ),
       ),
