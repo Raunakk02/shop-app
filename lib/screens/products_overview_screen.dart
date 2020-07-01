@@ -84,9 +84,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             ),
           ),
         ],
-      ),
+      ),      
       drawer: AppDrawer(),
-      body: _isInit ? Center(child: CircularProgressIndicator(),) : loadedProducts.isEmpty
+      body: _isInit ? Center(child: Image.asset('assets/images/ripple.gif'),) : loadedProducts.isEmpty
           ? _showFavorites
               ? Center(
                   child: Text('No Favourite Products yet!'),

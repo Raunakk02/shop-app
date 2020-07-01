@@ -28,13 +28,16 @@ class _ProductItemState extends State<ProductItem> {
         );
       },
       child: GridTile(
-        child: FadeInImage(
-          placeholder: AssetImage('assets/images/ripple.gif'),
-          image: NetworkImage(
-            product.imageUrl,
+        child: Hero(
+          tag: product.id,
+          child: FadeInImage(
+            placeholder: AssetImage('assets/images/ripple.gif'),
+            image: NetworkImage(
+              product.imageUrl,
+            ),
+            fit: BoxFit.cover,
+            width: double.infinity,
           ),
-          fit: BoxFit.cover,
-          width: double.infinity,          
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
