@@ -104,7 +104,7 @@ class _AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
   final _passwordController = TextEditingController();
 
   AnimationController _controller;
-  Animation<Size> _heightAnimation;
+  Animation<double> _opacityAnimation;
 
   @override
   void initState() {
@@ -116,9 +116,9 @@ class _AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
       ),
     );
 
-    _heightAnimation = Tween<Size>(
-      begin: Size(double.infinity, 260),
-      end: Size(double.infinity, 320),
+    _opacityAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
     ).animate(
       CurvedAnimation(
         parent: _controller,
@@ -126,9 +126,6 @@ class _AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
       ),
     );
 
-    _heightAnimation.addListener(() {
-      setState(() {});
-    });
   }
 
   void _showErrorDialog(String message) {
@@ -259,18 +256,22 @@ class _AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
                   },
                 ),
                 if (_authMode == AuthMode.Signup)
-                  TextFormField(
-                    enabled: _authMode == AuthMode.Signup,
-                    decoration: InputDecoration(labelText: 'Confirm Password'),
-                    obscureText: true,
-                    validator: _authMode == AuthMode.Signup
-                        ? (value) {
-                            if (value != _passwordController.text) {
-                              return 'Passwords do not match!';
+                  FadeTransition(
+                    opacity: _opacityAnimation,
+                    child: TextFormField(
+                      enabled: _authMode == AuthMode.Signup,
+                      decoration:
+                          InputDecoration(labelText: 'Confirm Password'),
+                      obscureText: true,
+                      validator: _authMode == AuthMode.Signup
+                          ? (value) {
+                              if (value != _passwordController.text) {
+                                return 'Passwords do not match!';
+                              }
+                              return null;
                             }
-                            return null;
-                          }
-                        : null,
+                          : null,
+                    ),
                   ),
                 SizedBox(
                   height: 20,
