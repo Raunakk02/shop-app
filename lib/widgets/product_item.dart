@@ -28,9 +28,13 @@ class _ProductItemState extends State<ProductItem> {
         );
       },
       child: GridTile(
-        child: Image.network(
-          product.imageUrl,
+        child: FadeInImage(
+          placeholder: AssetImage('assets/images/ripple.gif'),
+          image: NetworkImage(
+            product.imageUrl,
+          ),
           fit: BoxFit.cover,
+          width: double.infinity,          
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
@@ -38,8 +42,7 @@ class _ProductItemState extends State<ProductItem> {
             icon: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border),
             onPressed: () {
               product
-                  .toggleFavoriteStatus(
-                      auth.token,auth.userId)
+                  .toggleFavoriteStatus(auth.token, auth.userId)
                   .catchError((error) {
                 scaffold.removeCurrentSnackBar();
                 scaffold.showSnackBar(
